@@ -1,0 +1,7 @@
+../src/hw/usb.c:45:6:usbInit	16	static
+../src/hw/usb.c:56:6:usbDeInit	8	static
+../src/hw/usb.c:64:6:usbIsOpen	8	static
+../src/hw/usb.c:69:6:usbIsConnect	4	static
+../src/hw/usb.c:88:9:usbGetMode	4	static
+../src/hw/usb.c:93:6:usbBegin	24	static
+../src/hw/usb.c:162:6:cliCmd	48	static

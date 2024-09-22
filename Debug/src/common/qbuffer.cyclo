@@ -1,0 +1,9 @@
+../src/common/qbuffer.c:11:6:qbufferInit	1
+../src/common/qbuffer.c:16:6:qbufferCreate	1
+../src/common/qbuffer.c:29:6:qbufferCreateBySize	1
+../src/common/qbuffer.c:42:6:qbufferWrite	6
+../src/common/qbuffer.c:77:6:qbufferRead	6
+../src/common/qbuffer.c:111:10:qbufferPeekWrite	1
+../src/common/qbuffer.c:116:10:qbufferPeekRead	1
+../src/common/qbuffer.c:122:10:qbufferAvailable	1
+../src/common/qbuffer.c:132:6:qbufferFlush	1
