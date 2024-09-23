@@ -1,8 +1,0 @@
-../src/common/log.c:48:6:logInit	8	static
-../src/common/log.c:78:6:logEnable	4	static
-../src/common/log.c:83:6:logDisable	4	static
-../src/common/log.c:88:6:logBoot	16	static
-../src/common/log.c:93:6:logOpen	16	static
-../src/common/log.c:101:6:logBufPrintf	48	static
-../src/common/log.c:135:6:logPrintf	16	static
-../src/common/log.c:170:6:cliCmd	40	static

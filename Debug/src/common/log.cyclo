@@ -1,8 +1,0 @@
-../src/common/log.c:48:6:logInit	1
-../src/common/log.c:78:6:logEnable	1
-../src/common/log.c:83:6:logDisable	1
-../src/common/log.c:88:6:logBoot	1
-../src/common/log.c:93:6:logOpen	1
-../src/common/log.c:101:6:logBufPrintf	4
-../src/common/log.c:135:6:logPrintf	5
-../src/common/log.c:170:6:cliCmd	14

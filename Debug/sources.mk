@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (11.3.rel1)
+# Toolchain: GNU Tools for STM32 (12.3.rel1)
 ################################################################################
 
 ELF_SRCS := 
@@ -26,6 +26,8 @@ Startup \
 lib/STM32G4xx_HAL_Driver/Src \
 src/bsp \
 src/common \
+src/drivers/lcd/hangul \
+src/drivers/lcd \
 src/drivers/usb/core \
 src/drivers/usb/usb_cdc \
 src/drivers/usb \

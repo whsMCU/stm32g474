@@ -59,6 +59,8 @@ void hwInit(void)
 
   logInit();
   gpioInit();
+  i2cInit();
+  lcdInit();
 
   logPrintf("\r\n[ Firmware Begin... ]\r\n");
   logPrintf("Booting..Name \t\t: %s\r\n", _DEF_BOARD_NAME);
@@ -69,7 +71,6 @@ void hwInit(void)
   uartInit();
   uartOpen(_DEF_UART2, 57600);
   canInit();
-  i2cInit();
   //  tim_Init();
   //  tim_Begin(_DEF_TIM3);
 

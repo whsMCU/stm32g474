@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (11.3.rel1)
+# Toolchain: GNU Tools for STM32 (12.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -13,6 +13,8 @@ RM := rm -rf
 -include src/drivers/usb/usb_cdc/subdir.mk
 -include src/drivers/usb/core/subdir.mk
 -include src/drivers/usb/subdir.mk
+-include src/drivers/lcd/hangul/subdir.mk
+-include src/drivers/lcd/subdir.mk
 -include src/common/subdir.mk
 -include src/bsp/subdir.mk
 -include src/subdir.mk
@@ -66,8 +68,8 @@ all: main-build
 main-build: stm32g474.elf secondary-outputs
 
 # Tool invocations
-stm32g474.elf stm32g474.map: $(OBJS) $(USER_OBJS) D:\STM32CubeIDE\stm32g474\STM32G474CEUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "stm32g474.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\STM32CubeIDE\stm32g474\STM32G474CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32g474.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+stm32g474.elf stm32g474.map: $(OBJS) $(USER_OBJS) C:\Users\jjins\Documents\Project\stm32g474\STM32G474CEUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "stm32g474.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\jjins\Documents\Project\stm32g474\STM32G474CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32g474.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
