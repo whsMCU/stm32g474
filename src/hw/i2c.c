@@ -53,6 +53,7 @@ typedef struct
 static i2c_tbl_t i2c_tbl[I2C_MAX_CH] =
     {
         { &hi2c2, GPIOA, GPIO_PIN_9,  GPIOB, GPIO_PIN_8},
+				{ &hi2c2, GPIOA, GPIO_PIN_9,  GPIOB, GPIO_PIN_8},
     };
 
 static const uint32_t i2c_freq_tbl[] =
@@ -120,9 +121,9 @@ bool i2cOpen(uint8_t ch, i2c_freq_t freq_khz)
       p_handle->Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
       p_handle->Init.NoStretchMode   = I2C_NOSTRETCH_DISABLE;
 
-      i2cReset(ch);
+      //i2cReset(ch);
 
-      HAL_I2C_DeInit(p_handle);
+      //HAL_I2C_DeInit(p_handle);
       if(HAL_I2C_Init(p_handle) == HAL_OK)
       {
         /* Enable the Analog I2C Filter */

@@ -23,23 +23,23 @@ typedef struct
 
 const can_baud_cfg_t can_baud_cfg_80m_normal[] =
     {
-        {50, 8, 13, 2}, // 100K, 87.5%
-        {40, 8, 13, 2}, // 125K, 87.5%
-        {20, 8, 13, 2}, // 250K, 87.5%
-        {10, 8, 13, 2}, // 500K, 87.5%
-        {5,  8, 13, 2}, // 1M,   87.5%
+        {15, 1, 12, 2}, // 100K, 86.7%
+        {16, 1, 13, 2}, // 125K, 87.5%
+        {40, 1, 12, 2}, // 250K, 86.7%
+        {20, 1, 12, 2}, // 500K, 86.7%
+        {10, 1, 12, 2}, // 1M,   86.7%
     };
 
 const can_baud_cfg_t can_baud_cfg_80m_data[] =
     {
-        {40, 8, 11, 8}, // 100K, 60%
-        {32, 8, 11, 8}, // 125K, 60%
-        {16, 8, 11, 8}, // 250K, 60%
-        {8,  8, 11, 8}, // 500K, 60%
-        {4,  8, 11, 8}, // 1M,   60%
-        {2,  8, 11, 8}, // 2M    60%
-        {1,  8, 11, 8}, // 4M    60%
-        {1,  8,  9, 6}, // 5M    62.5%
+        {75, 1, 14, 5}, // 100K, 75%
+        {60, 1, 14, 5}, // 125K, 75%
+        {30, 1, 14, 5}, // 250K, 75%
+        {15, 1, 14, 5}, // 500K, 75%
+        {10, 1, 10, 4}, // 1M,   73.3%
+        {5,  1, 10, 4}, // 2M    73.3%
+        {5,  1,  7, 2}, // 4M    80%
+        {2,  1, 10, 4}, // 5M    73.3%
     };
 
 const can_baud_cfg_t *p_baud_normal = can_baud_cfg_80m_normal;
@@ -355,10 +355,10 @@ bool canMsgWrite(uint8_t ch, can_msg_t *p_msg, uint32_t timeout)
   tx_header.DataLength          = dlc_tbl[p_msg->dlc];
 
 
-  if (HAL_FDCAN_GetTxFifoFreeLevel(p_can) == 0)
-  {
-    return false;
-  }
+//  if (HAL_FDCAN_GetTxFifoFreeLevel(p_can) == 0)
+//  {
+//    return false;
+//  }
 
 
   pre_time = millis();

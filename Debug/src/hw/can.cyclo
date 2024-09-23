@@ -4,7 +4,7 @@
 ../src/hw/can.c:250:6:canConfigFilter	5
 ../src/hw/can.c:290:10:canMsgAvailable	2
 ../src/hw/can.c:297:6:canMsgInit	1
-../src/hw/can.c:306:6:canMsgWrite	13
+../src/hw/can.c:306:6:canMsgWrite	12
 ../src/hw/can.c:385:6:canMsgRead	2
 ../src/hw/can.c:397:10:canGetRxErrCount	3
 ../src/hw/can.c:414:10:canGetTxErrCount	3

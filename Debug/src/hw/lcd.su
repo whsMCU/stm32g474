@@ -1,4 +1,4 @@
-C:/Users/jjins/Documents/Project/stm32g474/src/common/maths.h:156:19:constrain	24	static
+D:/STM32CubeIDE/stm32g474/src/common/maths.h:156:19:constrain	24	static
 ../src/hw/lcd.c:79:6:TransferDoneISR	8	static
 ../src/hw/lcd.c:93:6:lcdInit	24	static
 ../src/hw/lcd.c:137:10:lcdGetDrawTime	4	static
@@ -12,9 +12,9 @@ C:/Users/jjins/Documents/Project/stm32g474/src/common/maths.h:156:19:constrain	2
 ../src/hw/lcd.c:193:18:lcdClearBuffer	8	static
 ../src/hw/lcd.c:203:18:lcdDrawFillCircle	48	static
 ../src/hw/lcd.c:234:18:lcdDrawCircleHelper	56	static
-../src/hw/lcd.c:275:18:lcdDrawRoundRect	64	static
+../src/hw/lcd.c:275:18:lcdDrawRoundRect	72	static
 ../src/hw/lcd.c:290:18:lcdDrawFillCircleHelper	56	static
-../src/hw/lcd.c:325:18:lcdDrawFillRoundRect	40	static
+../src/hw/lcd.c:325:18:lcdDrawFillRoundRect	48	static
 ../src/hw/lcd.c:335:18:lcdDrawTriangle	40	static
 ../src/hw/lcd.c:342:18:lcdDrawFillTriangle	80	dynamic
 ../src/hw/lcd.c:378:10:lcdGetFps	4	static

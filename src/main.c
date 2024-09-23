@@ -33,13 +33,34 @@ int main(void)
   hwInit();
 
   pre_time = micros();
-
+  can_msg_t msg;
   while (1)
   {
 	  if(micros()-pre_time >= 500000)
 	  {
 	    pre_time = micros();
 		  gpioPinToggle(LED);
+
+      msg.frame   = CAN_CLASSIC;
+      msg.id_type = CAN_EXT;
+      msg.dlc     = CAN_DLC_3;
+      msg.id      = 0x314;
+      msg.length  = 3;
+      msg.data[0] = 1;
+      msg.data[1] = 2;
+      msg.data[2] = 3;
+      canMsgWrite(_DEF_CAN2, &msg, 10);
+
+      if (canUpdate())
+      {
+        cliPrintf("BusOff Recovery\n");
+      }
+	  }
+	  if (lcdDrawAvailable() == true)
+	  {
+	    lcdSetFont(LCD_FONT_HAN);
+	    lcdPrintf(0,16*0, green, "[CAN 통신 하자!]");
+	    lcdRequestDraw();
 	  }
     cliMain();
   }
@@ -68,16 +89,15 @@ void hwInit(void)
 
   usbInit();
   usbBegin(USB_CDC_MODE);
+
   uartInit();
   uartOpen(_DEF_UART2, 57600);
+
   canInit();
-  //  tim_Init();
-  //  tim_Begin(_DEF_TIM3);
+  //canOpen(_DEF_CAN2, CAN_LOOPBACK, CAN_CLASSIC, CAN_500K, CAN_500K);
+  canOpen(_DEF_CAN2, CAN_NORMAL, CAN_CLASSIC, CAN_500K, CAN_2M);
 
   cliOpen(_DEF_USB, 57600);
-  canOpen(_DEF_CAN2, CAN_LOOPBACK, CAN_CLASSIC, CAN_500K, CAN_500K);
-  //canOpen(_DEF_CAN2, CAN_NORMAL, CAN_CLASSIC, CAN_1M, CAN_2M);
-  i2cOpen(_DEF_I2C2, I2C_FREQ_400KHz);
 }
 
 /**
