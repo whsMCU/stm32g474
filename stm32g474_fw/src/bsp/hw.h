@@ -26,6 +26,8 @@
 #include "usb.h"
 #include "rtc.h"
 #include "reset.h"
+#include "spi.h"
+#include "spi_flash.h"
 
 
 

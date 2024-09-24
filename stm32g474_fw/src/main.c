@@ -82,16 +82,24 @@ void hwInit(void)
   gpioInit();
   i2cInit();
   lcdInit();
+  uartInit();
+  uartOpen(_DEF_UART2, 57600);
 
+  logOpen(HW_LOG_CH, 115200);
   logPrintf("\r\n[ Firmware Begin... ]\r\n");
   logPrintf("Booting..Name \t\t: %s\r\n", _DEF_BOARD_NAME);
   logPrintf("Booting..Ver  \t\t: %s\r\n", _DEF_FIRMWATRE_VERSION);
+  logPrintf("Booting..Clock\t\t: %d Mhz\r\n", (int)HAL_RCC_GetSysClockFreq()/1000000);
+  logPrintf("\n");
+
+  //rtcInit();
+  //resetInit();
+  spiFlashInit();
+  //flashInit();
+  //eepromInit();
 
   usbInit();
   usbBegin(USB_CDC_MODE);
-
-  uartInit();
-  uartOpen(_DEF_UART2, 57600);
 
   canInit();
   //canOpen(_DEF_CAN2, CAN_LOOPBACK, CAN_CLASSIC, CAN_500K, CAN_500K);

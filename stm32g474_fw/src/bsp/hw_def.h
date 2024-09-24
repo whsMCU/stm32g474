@@ -18,7 +18,7 @@
 //#define      HW_TIM_MAX_CH          1
 
 #define _USE_HW_GPIO
-#define      HW_GPIO_MAX_CH         2
+#define      HW_GPIO_MAX_CH         1
 
 //#define _USE_HW_BUTTON
 //#define      HW_BUTTON_MAX_CH       3
@@ -78,7 +78,11 @@
 #define      HW_LCD_HEIGHT          128
 #endif
 
+#define _USE_HW_SPI_FLASH
+#define      HW_SPI_FLASH_ADDR      0x90000000
 
+#define _USE_HW_SPI
+#define      HW_SPI_MAX_CH          1
 
 #ifndef M_PI
 #define M_PI       3.14159265358979323846f
@@ -92,7 +96,7 @@
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) > (b) ? (a) : (b))
-//#define abs(x) ((x) > 0 ? (x) : -(x))
+//#define abs(x) 	  ((x) > 0 ? (x) : -(x))
 #define zofs(x, y, z) ((x) > (y+z) ? (x) : ((x) < (y-z) ? (x) : (y)))
 #define map(x, in_min, in_max, out_min, out_max) ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
