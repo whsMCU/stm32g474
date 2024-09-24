@@ -30,7 +30,7 @@ static void cliLed(cli_args_t *args);
 
 static const led_tbl_t led_tbl[LED_MAX_CH] =
 {
-  {GPIOB, GPIO_PIN_2,  GPIO_PIN_RESET, GPIO_PIN_SET},   // 0. DEBUG
+  {GPIOC, GPIO_PIN_6,  GPIO_PIN_RESET, GPIO_PIN_SET},   // 0. DEBUG
   {GPIOC, GPIO_PIN_10, GPIO_PIN_RESET, GPIO_PIN_SET},   // 1. RX
   {GPIOC, GPIO_PIN_11, GPIO_PIN_RESET, GPIO_PIN_SET},   // 2. TX
   {GPIOB, GPIO_PIN_5,  GPIO_PIN_RESET, GPIO_PIN_SET},   // 3. CAN
@@ -61,13 +61,19 @@ bool ledInit(void)
   GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStructure.Pull = GPIO_NOPULL;
 
-  for (int i=0; i<LED_MAX_CH; i++)
-  {
-    GPIO_InitStructure.Pin = led_tbl[i].pin;
-    HAL_GPIO_Init(led_tbl[i].port, &GPIO_InitStructure);
+//  for (int i=0; i<LED_MAX_CH; i++)
+//  {
+//    GPIO_InitStructure.Pin = led_tbl[i].pin;
+//    HAL_GPIO_Init(led_tbl[i].port, &GPIO_InitStructure);
+//
+//    ledOff(i);
+//  }
 
-    ledOff(i);
-  }
+  GPIO_InitStructure.Pin = led_tbl[0].pin;
+  HAL_GPIO_Init(led_tbl[0].port, &GPIO_InitStructure);
+
+  ledOff(0);
+
 
 #ifdef _USE_HW_CLI
   cliAdd("led", cliLed);

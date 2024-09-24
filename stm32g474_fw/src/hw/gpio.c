@@ -23,7 +23,7 @@ typedef struct
 
 const gpio_tbl_t gpio_tbl[GPIO_MAX_CH] =
 {
-  {GPIOC, GPIO_PIN_6,   _DEF_OUTPUT,  	        GPIO_PIN_SET,   GPIO_PIN_RESET, _DEF_HIGH},    //  1. LED
+  //{GPIOC, GPIO_PIN_6,   _DEF_OUTPUT,  GPIO_PIN_SET,   GPIO_PIN_RESET, _DEF_HIGH},    //  1. LED
 };
 
 

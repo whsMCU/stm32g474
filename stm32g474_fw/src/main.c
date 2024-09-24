@@ -23,7 +23,8 @@ void hwInit(void);
 void SystemClock_Config(void);
 
 uint32_t pre_time = 0;
-
+uint32_t dt = 0;
+uint32_t dt_tmp = 0;
 int main(void)
 {
   HAL_Init();
@@ -33,13 +34,14 @@ int main(void)
   hwInit();
 
   pre_time = micros();
+  dt = micros();
   can_msg_t msg;
   while (1)
   {
 	  if(micros()-pre_time >= 500000)
 	  {
 	    pre_time = micros();
-		  gpioPinToggle(LED);
+	    ledToggle(0);
 
       msg.frame   = CAN_CLASSIC;
       msg.id_type = CAN_EXT;
@@ -80,10 +82,19 @@ void hwInit(void)
 
   logInit();
   gpioInit();
+  ledInit();
+  spiInit();
+  //buttonInit();
+
   i2cInit();
   lcdInit();
+
   uartInit();
-  uartOpen(_DEF_UART2, 57600);
+//  for (int i=0; i<HW_UART_MAX_CH; i++)
+//  {
+//    uartOpen(i, 115200);
+//  }
+  uartOpen(_DEF_UART2, 115200);
 
   logOpen(HW_LOG_CH, 115200);
   logPrintf("\r\n[ Firmware Begin... ]\r\n");
@@ -105,7 +116,7 @@ void hwInit(void)
   //canOpen(_DEF_CAN2, CAN_LOOPBACK, CAN_CLASSIC, CAN_500K, CAN_500K);
   canOpen(_DEF_CAN2, CAN_NORMAL, CAN_CLASSIC, CAN_500K, CAN_2M);
 
-  cliOpen(_DEF_USB, 57600);
+  cliOpen(_DEF_UART4, 115200);
 }
 
 /**

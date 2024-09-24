@@ -38,10 +38,12 @@ static const osMutexDef_t mutex_lock_def[I2C_MAX_CH];
 
 
 I2C_HandleTypeDef hi2c2;
+DMA_HandleTypeDef hdma_i2c2_tx;
 
 typedef struct
 {
   I2C_HandleTypeDef *p_hi2c;
+  DMA_HandleTypeDef *hdma_i2c_tx;
 
   GPIO_TypeDef *scl_port;
   int           scl_pin;
@@ -52,8 +54,8 @@ typedef struct
 
 static i2c_tbl_t i2c_tbl[I2C_MAX_CH] =
     {
-        { &hi2c2, GPIOA, GPIO_PIN_9,  GPIOB, GPIO_PIN_8},
-				{ &hi2c2, GPIOA, GPIO_PIN_9,  GPIOB, GPIO_PIN_8},
+        { &hi2c2, NULL, 				 GPIOA, GPIO_PIN_9,  GPIOB, GPIO_PIN_8},
+				{ &hi2c2, &hdma_i2c2_tx, GPIOA, GPIO_PIN_9,  GPIOB, GPIO_PIN_8},
     };
 
 static const uint32_t i2c_freq_tbl[] =
@@ -336,6 +338,33 @@ bool i2cWriteBytes(uint8_t ch, uint16_t dev_addr, uint16_t reg_addr, uint8_t *p_
   return ret;
 }
 
+bool i2cWriteBytesDMA(uint8_t ch, uint16_t dev_addr, uint16_t reg_addr, uint8_t *p_data, uint32_t length)
+{
+  bool ret;
+  HAL_StatusTypeDef i2c_ret;
+  I2C_HandleTypeDef *p_handle = i2c_tbl[ch].p_hi2c;
+
+  if (ch >= I2C_MAX_CH)
+  {
+    return false;
+  }
+
+  LOCK_BEGIN(ch);
+  i2c_ret = HAL_I2C_Mem_Write_DMA(p_handle, (uint16_t)(dev_addr << 1), reg_addr, I2C_MEMADD_SIZE_8BIT, p_data, length);
+
+  if(i2c_ret == HAL_OK)
+  {
+    ret = true;
+  }
+  else
+  {
+    ret = false;
+  }
+  LOCK_END(ch);
+
+  return ret;
+}
+
 bool i2cWrite16Byte (uint8_t ch, uint16_t dev_addr, uint16_t reg_addr, uint8_t data, uint32_t timeout)
 {
   return i2cWrite16Bytes(ch, dev_addr, reg_addr, &data, 1, timeout);
@@ -415,19 +444,15 @@ void delayUs(uint32_t us)
   }
 }
 
-
-
-
-
 void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c)
 {
   UNUSED(hi2c);
 
-  if (hi2c->Instance == i2c_tbl[_DEF_I2C1].p_hi2c->Instance)
+  if (hi2c->Instance == i2c_tbl[_DEF_I2C2].p_hi2c->Instance)
   {
     if (hi2c->ErrorCode > 0)
     {
-      i2c_errcount[_DEF_I2C1]++;
+      i2c_errcount[_DEF_I2C2]++;
     }
   }
 }
@@ -468,6 +493,20 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
     /* I2C2 clock enable */
     __HAL_RCC_I2C2_CLK_ENABLE();
 
+    /* I2C2 DMA Init */
+    /* I2C2_TX Init */
+    hdma_i2c2_tx.Instance = DMA1_Channel2;
+    hdma_i2c2_tx.Init.Request = DMA_REQUEST_I2C2_TX;
+    hdma_i2c2_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_i2c2_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_i2c2_tx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_i2c2_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_i2c2_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_i2c2_tx.Init.Mode = DMA_NORMAL;
+    hdma_i2c2_tx.Init.Priority = DMA_PRIORITY_LOW;
+    HAL_DMA_Init(&hdma_i2c2_tx);
+    __HAL_LINKDMA(i2cHandle,hdmatx,hdma_i2c2_tx);
+
     /* I2C2 interrupt Init */
     HAL_NVIC_SetPriority(I2C2_ER_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(I2C2_ER_IRQn);
@@ -495,6 +534,9 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_8);
 
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9);
+
+    /* I2C2 DMA DeInit */
+    HAL_DMA_DeInit(i2cHandle->hdmatx);
 
     /* I2C2 interrupt Deinit */
     HAL_NVIC_DisableIRQ(I2C2_ER_IRQn);

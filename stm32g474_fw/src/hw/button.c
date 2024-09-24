@@ -8,16 +8,12 @@
 
 #include "button.h"
 #include "cli.h"
-//#include "swtimer.h"
+#include "swtimer.h"
 
 
 #ifdef _USE_HW_BUTTON
 
-
-
 #define BUTTON_EVENT_MAX          8
-
-
 
 typedef struct
 {
