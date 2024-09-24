@@ -1,7 +1,0 @@
-../src/hw/usb.c:45:6:usbInit	1
-../src/hw/usb.c:56:6:usbDeInit	2
-../src/hw/usb.c:64:6:usbIsOpen	1
-../src/hw/usb.c:69:6:usbIsConnect	4
-../src/hw/usb.c:88:9:usbGetMode	1
-../src/hw/usb.c:93:6:usbBegin	6
-../src/hw/usb.c:162:6:cliCmd	14
