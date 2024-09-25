@@ -10,8 +10,12 @@
 #define _DEF_FIRMWATRE_VERSION    "V240922R1"
 #define _DEF_BOARD_NAME           "STM32G474"
 
-//#define _USE_HW_RTC
-//#define _USE_HW_RESET
+#define _USE_HW_RTC
+#define      HW_RTC_BOOT_MODE       RTC_BKP_DR3
+#define      HW_RTC_RESET_BITS      RTC_BKP_DR4
+
+#define _USE_HW_RESET
+#define      HW_RESET_BOOT          1
 //#define _USE_HW_FLASH
 
 //#define _USE_HW_TIM

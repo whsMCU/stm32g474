@@ -6,9 +6,9 @@
  */
 
 
-#include "hw.h"
 #include "cli.h"
 #include "rtc.h"
+#include <time.h>
 
 #ifdef _USE_HW_RTC
 
@@ -106,7 +106,7 @@ bool rtcGetDate(rtc_date_t *rtc_date)
   rtc_date->day = sDate.Date;
 
 
-  struct tm  timeinfo;
+  struct tm timeinfo;
 
   memset(&timeinfo, 0, sizeof(timeinfo));
   timeinfo.tm_year  = (2000 + sDate.Year) - 1900;
@@ -177,10 +177,7 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef* rtcHandle)
     */
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
     PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
-    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
-    {
-      Error_Handler();
-    }
+    HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
 
     /* RTC clock enable */
     __HAL_RCC_RTC_ENABLE();
