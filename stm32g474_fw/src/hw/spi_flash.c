@@ -15,8 +15,8 @@
 
 #ifdef _USE_HW_SPI_FLASH
 
-#define SPI_CS_L()    gpioPinWrite(0, _DEF_LOW)
-#define SPI_CS_H()    gpioPinWrite(0, _DEF_HIGH)
+#define SPI_CS_L()    gpioPinWrite(W25Q128_CS, _DEF_LOW)
+#define SPI_CS_H()    gpioPinWrite(W25Q128_CS, _DEF_HIGH)
 
 
 static bool is_init = false;

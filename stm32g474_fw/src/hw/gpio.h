@@ -20,7 +20,7 @@ extern "C" {
 
 enum
 {
-	CS,
+	W25Q128_CS,
 	LED
 };
 
