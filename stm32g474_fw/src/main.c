@@ -35,7 +35,8 @@ int main(void)
 
   pre_time = micros();
   dt = micros();
-  can_msg_t msg;
+  can_msg_t tx_msg;
+  can_msg_t rx_msg;
   while (1)
   {
 	  if(micros()-pre_time >= 500000)
@@ -43,25 +44,32 @@ int main(void)
 	    pre_time = micros();
 	    ledToggle(0);
 
-      msg.frame   = CAN_CLASSIC;
-      msg.id_type = CAN_EXT;
-      msg.dlc     = CAN_DLC_3;
-      msg.id      = 0x314;
-      msg.length  = 3;
-      msg.data[0] = 1;
-      msg.data[1] = 2;
-      msg.data[2] = 3;
-      canMsgWrite(_DEF_CAN2, &msg, 10);
+	    tx_msg.frame   = CAN_CLASSIC;
+	    tx_msg.id_type = CAN_EXT;
+	    tx_msg.dlc     = CAN_DLC_3;
+	    tx_msg.id      = 0x314;
+	    tx_msg.length  = 3;
+	    tx_msg.data[0] = 1;
+	    tx_msg.data[1] = 2;
+	    tx_msg.data[2] = 3;
+      canMsgWrite(_DEF_CAN2, &tx_msg, 10);
 
       if (canUpdate())
       {
         cliPrintf("BusOff Recovery\n");
       }
+      if (canMsgAvailable(_DEF_CAN2))
+      {
+        canMsgRead(_DEF_CAN2, &rx_msg);
+      }
 	  }
 	  if (lcdDrawAvailable() == true)
 	  {
 	    lcdSetFont(LCD_FONT_HAN);
-	    lcdPrintf(0,16*0, green, "[CAN 통신 하자!]");
+	    lcdPrintf(0,16*0, white, "[CAN 통신 하자!]");
+	    lcdPrintf(0,16*1, white, "ID : 0x%08X", rx_msg.id);
+	    lcdPrintf(0,16*2, white, "DLC : %d", rx_msg.length);
+	    lcdPrintf(0,16*3, white, "DATA : %d %d", rx_msg.data[0], rx_msg.data[1]);
 	    lcdRequestDraw();
 	  }
     cliMain();

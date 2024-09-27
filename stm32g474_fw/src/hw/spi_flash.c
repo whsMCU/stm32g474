@@ -447,6 +447,24 @@ void cliCmd(cli_args_t *args)
     {
       cliPrintf("flash addr  : 0x%X\n", 0x0000000);
     }
+    else if(args->isStr(0, "test") == true)
+    {
+    	uint8_t tmp_write[1024];
+    	uint8_t tmp_read[1024];
+    	for (i=0;i<=1024;i++)
+    	{
+    		tmp_write[i] = i;
+    	}
+      pre_time = micros();
+      flash_ret = spiFlashWrite(0x0, tmp_write, 1024);
+
+      cliPrintf( "addr : 0x%X\t 0x%02X %dms\n", 0, tmp_write[0], micros()-pre_time);
+
+      pre_time = micros();
+      flash_ret = spiFlashRead(0x0, tmp_read, 1024);
+
+      cliPrintf( "addr : 0x%X\t 0x%02X %dms\n", 0, tmp_read[0], micros()-pre_time);
+    }
     else
     {
       ret = false;
@@ -523,6 +541,7 @@ void cliCmd(cli_args_t *args)
   if (ret == false)
   {
     cliPrintf( "spiFlash info\n");
+    cliPrintf( "spiFlash test\n");
     cliPrintf( "spiFlash read  [addr] [length]\n");
     cliPrintf( "spiFlash erase [addr] [length]\n");
     cliPrintf( "spiFlash write [addr] [data]\n");
