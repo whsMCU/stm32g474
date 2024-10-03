@@ -25,6 +25,16 @@ void SystemClock_Config(void);
 uint32_t pre_time = 0;
 uint32_t dt = 0;
 uint32_t dt_tmp = 0;
+can_msg_t tx_msg;
+can_msg_t rx_msg =
+		{
+				.id = 0,
+				.length = 0,
+				.data = {0,},
+				.dlc = CAN_DLC_0,
+				.id_type = CAN_EXT,
+				.frame = CAN_CLASSIC
+		};
 int main(void)
 {
   HAL_Init();
@@ -35,8 +45,6 @@ int main(void)
 
   pre_time = micros();
   dt = micros();
-  can_msg_t tx_msg;
-  can_msg_t rx_msg;
   while (1)
   {
 	  if(micros()-pre_time >= 500000)
@@ -66,6 +74,7 @@ int main(void)
 	  if (lcdDrawAvailable() == true)
 	  {
 	    lcdSetFont(LCD_FONT_HAN);
+	    lcdDrawFillRect(0, 0, LCD_WIDTH, LCD_HEIGHT, black);
 	    lcdPrintf(0,16*0, white, "[CAN 통신 하자!]");
 	    lcdPrintf(0,16*1, white, "ID : 0x%08X", rx_msg.id);
 	    lcdPrintf(0,16*2, white, "DLC : %d", rx_msg.length);
