@@ -61,6 +61,8 @@ extern DMA_HandleTypeDef hdma_i2c2_tx;
 extern I2C_HandleTypeDef hi2c2;
 extern QSPI_HandleTypeDef hqspi1;
 extern SPI_HandleTypeDef hspi1;
+extern DMA_HandleTypeDef hdma_tim2_ch1;
+extern TIM_HandleTypeDef htim2;
 extern DMA_HandleTypeDef hdma_usart2_rx;
 extern UART_HandleTypeDef huart2;
 /* USER CODE BEGIN EV */
@@ -235,6 +237,20 @@ void DMA1_Channel2_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles DMA1 channel4 global interrupt.
+  */
+void DMA1_Channel4_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel4_IRQn 0 */
+
+  /* USER CODE END DMA1_Channel4_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_tim2_ch1);
+  /* USER CODE BEGIN DMA1_Channel4_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel4_IRQn 1 */
+}
+
+/**
   * @brief This function handles USB low priority interrupt remap.
   */
 void USB_LP_IRQHandler(void)
@@ -246,6 +262,20 @@ void USB_LP_IRQHandler(void)
   /* USER CODE BEGIN USB_LP_IRQn 1 */
 
   /* USER CODE END USB_LP_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM2 global interrupt.
+  */
+void TIM2_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM2_IRQn 0 */
+
+  /* USER CODE END TIM2_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim2);
+  /* USER CODE BEGIN TIM2_IRQn 1 */
+
+  /* USER CODE END TIM2_IRQn 1 */
 }
 
 /**
@@ -305,6 +335,20 @@ void EXTI15_10_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles FDCAN2 interrupt 0.
+  */
+//void FDCAN2_IT0_IRQHandler(void)
+//{
+//  /* USER CODE BEGIN FDCAN2_IT0_IRQn 0 */
+//
+//  /* USER CODE END FDCAN2_IT0_IRQn 0 */
+//  HAL_FDCAN_IRQHandler(&hfdcan2);
+//  /* USER CODE BEGIN FDCAN2_IT0_IRQn 1 */
+//
+//  /* USER CODE END FDCAN2_IT0_IRQn 1 */
+//}
+
+/**
   * @brief This function handles QUADSPI global interrupt.
   */
 void QUADSPI_IRQHandler(void)
@@ -312,7 +356,7 @@ void QUADSPI_IRQHandler(void)
   /* USER CODE BEGIN QUADSPI_IRQn 0 */
 
   /* USER CODE END QUADSPI_IRQn 0 */
- // HAL_QSPI_IRQHandler(&hqspi1);
+  //HAL_QSPI_IRQHandler(&hqspi1);
   /* USER CODE BEGIN QUADSPI_IRQn 1 */
 
   /* USER CODE END QUADSPI_IRQn 1 */

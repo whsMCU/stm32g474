@@ -29,6 +29,7 @@
 #include "spi.h"
 #include "spi_flash.h"
 #include "led.h"
+#include "ws2812.h"
 //#include "button.h"
 
 

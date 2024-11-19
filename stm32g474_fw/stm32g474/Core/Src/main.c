@@ -103,6 +103,7 @@ int main(void)
   MX_RTC_Init();
   MX_TIM5_Init();
   MX_USB_Device_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */

@@ -126,6 +126,10 @@ void hwInit(void)
   //flashInit();
   //eepromInit();
 
+	#ifdef _USE_HW_WS2812
+		ws2812Init();
+	#endif
+
   usbInit();
   usbBegin(USB_CDC_MODE);
 
