@@ -13,10 +13,10 @@
 #ifdef _USE_HW_WS2812
 #include "cli.h"
 
-#define BIT_PERIOD (130) // 1300ns, 80Mhz
-#define BIT_HIGH   (70)  // 700ns
-#define BIT_LOW    (35)  // 350ns
-#define BIT_ZERO   (50)
+#define BIT_PERIOD (63)  // 1250ns 800kHz
+#define BIT_HIGH   (40)  // 800ns
+#define BIT_LOW    (23)  // 400ns
+#define BIT_ZERO   (40)  // 50us
 
 bool is_init = false;
 
@@ -47,15 +47,18 @@ bool ws2812Init(void)
 
   memset(bit_buf, 0, sizeof(bit_buf));
 
+  __HAL_RCC_DMAMUX1_CLK_ENABLE();
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
   ws2812.h_timer = &htim2;
   ws2812.channel = TIM_CHANNEL_1;
 
   // Timer
   //
-  htim2.Instance 							 = TIM2;
-  htim2.Init.Prescaler 				 = 2; // 300MHz / (2+1) = 100Mhz -> 10ns
+  htim2.Instance 			   = TIM2;
+  htim2.Init.Prescaler 		   = 3-1; // 150MHz / (2+1) = 50Mhz -> 20ns
   htim2.Init.CounterMode       = TIM_COUNTERMODE_UP;
-  htim2.Init.Period            = BIT_PERIOD-1;
+  htim2.Init.Period            = BIT_PERIOD-1; //1.26us
   htim2.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.RepetitionCounter = 0;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
@@ -70,11 +73,11 @@ bool ws2812Init(void)
   sMasterConfig.MasterSlaveMode     = TIM_MASTERSLAVEMODE_DISABLE;
   HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
 
-  sConfigOC.OCMode 			= TIM_OCMODE_PWM1;
-  sConfigOC.Pulse				= 0;
+  sConfigOC.OCMode 		= TIM_OCMODE_PWM1;
+  sConfigOC.Pulse		= 0;
   sConfigOC.OCPolarity 	= TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode 	= TIM_OCFAST_DISABLE;
-  HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2);
+  HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);
 
   ws2812InitHw();
 
