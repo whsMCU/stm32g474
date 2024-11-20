@@ -42,7 +42,7 @@
 #define      HW_LED_CH_RS485        _DEF_LED5
 
 #define _USE_HW_UART
-#define      HW_UART_MAX_CH         5
+#define      HW_UART_MAX_CH         4
 #define      HW_UART_CH_DEBUG       _DEF_UART1
 #define      HW_UART_CH_RS485       _DEF_UART2
 #define      HW_UART_CH_EXT         _DEF_UART3

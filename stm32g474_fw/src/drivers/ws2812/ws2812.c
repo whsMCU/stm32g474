@@ -50,17 +50,19 @@ bool ws2812Init(void)
   __HAL_RCC_DMAMUX1_CLK_ENABLE();
   __HAL_RCC_DMA1_CLK_ENABLE();
 
+  HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel3_IRQn);
+
   ws2812.h_timer = &htim2;
   ws2812.channel = TIM_CHANNEL_1;
 
   // Timer
   //
-  htim2.Instance 			   = TIM2;
-  htim2.Init.Prescaler 		   = 3-1; // 150MHz / (2+1) = 50Mhz -> 20ns
+  htim2.Instance 			   			 = TIM2;
+  htim2.Init.Prescaler 		   	 = 3-1; // 150MHz / (2+1) = 50Mhz -> 20ns
   htim2.Init.CounterMode       = TIM_COUNTERMODE_UP;
   htim2.Init.Period            = BIT_PERIOD-1; //1.26us
   htim2.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.RepetitionCounter = 0;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   HAL_TIM_Base_Init(&htim2);
 
@@ -73,8 +75,8 @@ bool ws2812Init(void)
   sMasterConfig.MasterSlaveMode     = TIM_MASTERSLAVEMODE_DISABLE;
   HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
 
-  sConfigOC.OCMode 		= TIM_OCMODE_PWM1;
-  sConfigOC.Pulse		= 0;
+  sConfigOC.OCMode 		  = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse			  = 0;
   sConfigOC.OCPolarity 	= TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode 	= TIM_OCFAST_DISABLE;
   HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);
@@ -106,7 +108,7 @@ bool ws2812InitHw(void)
   GPIO_InitStruct.Pin = GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   GPIO_InitStruct.Alternate = GPIO_AF1_TIM2;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -115,7 +117,7 @@ bool ws2812InitHw(void)
 
   /* TIM2 DMA Init */
   /* TIM2_CH1 Init */
-  hdma_tim2_ch1.Instance = DMA1_Channel4;
+  hdma_tim2_ch1.Instance = DMA1_Channel3;
   hdma_tim2_ch1.Init.Request = DMA_REQUEST_TIM2_CH1;
   hdma_tim2_ch1.Init.Direction = DMA_MEMORY_TO_PERIPH;
   hdma_tim2_ch1.Init.PeriphInc = DMA_PINC_DISABLE;
@@ -128,10 +130,6 @@ bool ws2812InitHw(void)
 
   __HAL_LINKDMA(&htim2, hdma[TIM_DMA_ID_CC1], hdma_tim2_ch1);
 
-  /* DMA1_Channel4_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
-
   /* TIM2 interrupt Init */
   HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(TIM2_IRQn);
@@ -139,9 +137,17 @@ bool ws2812InitHw(void)
   return true;
 }
 
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
+{
+	if(htim->Instance == TIM2)
+	{
+		HAL_TIM_PWM_Stop_DMA(ws2812.h_timer, ws2812.channel);
+	}
+}
+
 bool ws2812Refresh(void)
 {
-  HAL_TIM_PWM_Stop_DMA(ws2812.h_timer, ws2812.channel);
+  //HAL_TIM_PWM_Stop_DMA(ws2812.h_timer, ws2812.channel);
   HAL_TIM_PWM_Start_DMA(ws2812.h_timer, ws2812.channel,  (const uint32_t *)bit_buf, sizeof(bit_buf));
   return true;
 }

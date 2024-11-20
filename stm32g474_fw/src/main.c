@@ -35,6 +35,7 @@ can_msg_t rx_msg =
 				.id_type = CAN_EXT,
 				.frame = CAN_CLASSIC
 		};
+
 int main(void)
 {
   HAL_Init();
@@ -45,6 +46,7 @@ int main(void)
 
   pre_time = micros();
   dt = micros();
+
   while (1)
   {
 	  if(micros()-pre_time >= 500000)
@@ -113,12 +115,12 @@ void hwInit(void)
 //  }
   uartOpen(_DEF_UART2, 115200);
 
-  logOpen(HW_LOG_CH, 115200);
-  logPrintf("\r\n[ Firmware Begin... ]\r\n");
-  logPrintf("Booting..Name \t\t: %s\r\n", _DEF_BOARD_NAME);
-  logPrintf("Booting..Ver  \t\t: %s\r\n", _DEF_FIRMWATRE_VERSION);
-  logPrintf("Booting..Clock\t\t: %d Mhz\r\n", (int)HAL_RCC_GetSysClockFreq()/1000000);
-  logPrintf("\n");
+//  logOpen(HW_LOG_CH, 115200);
+//  logPrintf("\r\n[ Firmware Begin... ]\r\n");
+//  logPrintf("Booting..Name \t\t: %s\r\n", _DEF_BOARD_NAME);
+//  logPrintf("Booting..Ver  \t\t: %s\r\n", _DEF_FIRMWATRE_VERSION);
+//  logPrintf("Booting..Clock\t\t: %d Mhz\r\n", (int)HAL_RCC_GetSysClockFreq()/1000000);
+//  logPrintf("\n");
 
   rtcInit();
   resetInit();
@@ -137,7 +139,7 @@ void hwInit(void)
   //canOpen(_DEF_CAN2, CAN_LOOPBACK, CAN_CLASSIC, CAN_500K, CAN_500K);
   canOpen(_DEF_CAN2, CAN_NORMAL, CAN_CLASSIC, CAN_500K, CAN_2M);
 
-  cliOpen(_DEF_UART4, 115200);
+  cliOpen(_DEF_USB, 115200);
 }
 
 /**
