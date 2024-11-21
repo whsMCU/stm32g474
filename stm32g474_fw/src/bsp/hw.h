@@ -11,6 +11,7 @@
 #include "hw_def.h"
 #include "def.h"
 #include "bsp.h"
+#include "main.h"
 #include "gpio.h"
 #include "tim.h"
 #include "can.h"
