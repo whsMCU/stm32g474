@@ -351,16 +351,16 @@ void EXTI15_10_IRQHandler(void)
 /**
   * @brief This function handles QUADSPI global interrupt.
   */
-void QUADSPI_IRQHandler(void)
-{
-  /* USER CODE BEGIN QUADSPI_IRQn 0 */
-
-  /* USER CODE END QUADSPI_IRQn 0 */
-  //HAL_QSPI_IRQHandler(&hqspi1);
-  /* USER CODE BEGIN QUADSPI_IRQn 1 */
-
-  /* USER CODE END QUADSPI_IRQn 1 */
-}
+//void QUADSPI_IRQHandler(void)
+//{
+//  /* USER CODE BEGIN QUADSPI_IRQn 0 */
+//
+//  /* USER CODE END QUADSPI_IRQn 0 */
+//  HAL_QSPI_IRQHandler(&hqspi1);
+//  /* USER CODE BEGIN QUADSPI_IRQn 1 */
+//
+//  /* USER CODE END QUADSPI_IRQn 1 */
+//}
 
 /* USER CODE BEGIN 1 */
 
