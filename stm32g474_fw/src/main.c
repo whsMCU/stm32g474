@@ -98,6 +98,7 @@ void hwInit(void)
 #endif
 
   cliInit();
+  tim_Begin(_DEF_TIM5);
 
   logInit();
   gpioInit();

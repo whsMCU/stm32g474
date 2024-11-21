@@ -18,8 +18,8 @@
 #define      HW_RESET_BOOT          1
 //#define _USE_HW_FLASH
 
-//#define _USE_HW_TIM
-//#define      HW_TIM_MAX_CH          1
+#define _USE_HW_TIM
+#define      HW_TIM_MAX_CH          1
 
 #define _USE_HW_WS2812
 #define     HW_WS2812_MAX_CH        1

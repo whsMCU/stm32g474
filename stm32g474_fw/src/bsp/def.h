@@ -57,6 +57,8 @@
 #define _DEF_TIM1             0
 #define _DEF_TIM2             1
 #define _DEF_TIM3             2
+#define _DEF_TIM4             3
+#define _DEF_TIM5             4
 
 #define _DEF_LOW              0
 #define _DEF_HIGH             1
