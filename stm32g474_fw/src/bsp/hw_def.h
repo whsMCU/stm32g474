@@ -22,7 +22,7 @@
 #define      HW_TIM_MAX_CH          1
 
 #define _USE_HW_WS2812
-#define     HW_WS2812_MAX_CH        1
+#define     HW_WS2812_MAX_CH        64
 
 #define _USE_HW_GPIO
 #define      HW_GPIO_MAX_CH           1

@@ -35,7 +35,4 @@
 
 
 
-void hwInit(void);
-
-
 #endif /* SRC_HW_HW_H_ */

@@ -63,17 +63,19 @@ bool ws2812Init(void)
   htim2.Init.CounterMode       = TIM_COUNTERMODE_UP;
   htim2.Init.Period            = BIT_PERIOD-1; //1.26us
   htim2.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
   {
     Error_Handler();
   }
+  ws2812InitHw();
 
   sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
   if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
   {
     Error_Handler();
   }
+
   if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
   {
     Error_Handler();
@@ -94,8 +96,6 @@ bool ws2812Init(void)
   {
     Error_Handler();
   }
-
-  ws2812InitHw();
 
   ws2812.led_cnt = WS2812_MAX_CH;
   is_init = true;
@@ -136,8 +136,8 @@ bool ws2812InitHw(void)
   hdma_tim2_ch1.Init.Direction = DMA_MEMORY_TO_PERIPH;
   hdma_tim2_ch1.Init.PeriphInc = DMA_PINC_DISABLE;
   hdma_tim2_ch1.Init.MemInc = DMA_MINC_ENABLE;
-  hdma_tim2_ch1.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-  hdma_tim2_ch1.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+  hdma_tim2_ch1.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+  hdma_tim2_ch1.Init.MemDataAlignment = DMA_PDATAALIGN_WORD;
   hdma_tim2_ch1.Init.Mode = DMA_NORMAL;
   hdma_tim2_ch1.Init.Priority = DMA_PRIORITY_LOW;
   if (HAL_DMA_Init(&hdma_tim2_ch1) != HAL_OK)
