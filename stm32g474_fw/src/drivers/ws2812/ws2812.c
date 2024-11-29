@@ -58,8 +58,8 @@ bool ws2812Init(void)
 
   // Timer
   //
-  htim2.Instance 			   = TIM2;
-  htim2.Init.Prescaler 		   = 3-1; // 150MHz / (2+1) = 50Mhz -> 20ns
+  htim2.Instance 			   			 = TIM2;
+  htim2.Init.Prescaler 		   	 = 3-1; // 150MHz / (2+1) = 50Mhz -> 20ns
   htim2.Init.CounterMode       = TIM_COUNTERMODE_UP;
   htim2.Init.Period            = BIT_PERIOD-1; //1.26us
   htim2.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;
@@ -88,8 +88,8 @@ bool ws2812Init(void)
     Error_Handler();
   }
 
-  sConfigOC.OCMode 		= TIM_OCMODE_PWM1;
-  sConfigOC.Pulse		= 0;
+  sConfigOC.OCMode 			= TIM_OCMODE_PWM1;
+  sConfigOC.Pulse				= 0;
   sConfigOC.OCPolarity 	= TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode 	= TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
@@ -158,13 +158,13 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Instance == TIM2)
 	{
-		HAL_TIM_PWM_Stop_DMA(ws2812.h_timer, ws2812.channel);
+		//HAL_TIM_PWM_Stop_DMA(ws2812.h_timer, ws2812.channel);
 	}
 }
 
 bool ws2812Refresh(void)
 {
-  //HAL_TIM_PWM_Stop_DMA(ws2812.h_timer, ws2812.channel);
+  HAL_TIM_PWM_Stop_DMA(ws2812.h_timer, ws2812.channel);
   HAL_TIM_PWM_Start_DMA(ws2812.h_timer, ws2812.channel,  (uint32_t *)bit_buf, sizeof(bit_buf));
   return true;
 }
